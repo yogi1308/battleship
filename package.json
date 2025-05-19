@@ -1,4 +1,5 @@
 {
+  "_note": "Run 'npm run test' to execute tests",
   "scripts": {
     "test": "jest"
   },
