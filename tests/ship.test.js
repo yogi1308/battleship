@@ -27,20 +27,15 @@ test('Test that calling hit() multiple times increases the hit count cumulativel
 })
 
 // sink method
-// Test that a ship is not sunk before receiving hits equal to its length.
 test('Test that a ship is not sunk before receiving hits equal to its length.', () => {
     const ship = new Ship();
     expect(ship.sunk).toBeFalsy();
 })
-
-// Test that a ship is considered sunk after receiving hits equal to its length.
 test('Test that a ship is considered sunk after receiving hits equal to its length.', () => {
     const ship = new Ship(3);
     ship.hit(); ship.hit(); ship.hit()
     expect(ship.isSunk()).toBeTruthy();
 })
-
-// Test that a ship is still considered sunk if hit() is called more than its length.
 test('Test that a ship is still considered sunk if hit() is called more than its length.', () => {
     const ship = new Ship(3);
     ship.hit(); ship.hit(); ship.hit(); ship.hit()

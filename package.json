@@ -1,7 +1,9 @@
 {
   "_note": "Run 'npm run test' to execute tests",
+  "description": "Use 'npm run test:FILENAME' to run only filename.test.js tests.",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test:gameboard": "jest tests/gameboard.test.js"
   },
   "devDependencies": {
     "@babel/core": "^7.27.1",
