@@ -25,24 +25,24 @@ test('Test that multiple ships can be placed', () => {
     const board = new Gameboard();
     board.placeShips([0, 0], 'x', ship1);
     const ship2 = new Ship(2);
-    board.placeShips([4, 1], 'y', ship2);
+    board.placeShips([0, 1], 'x', ship2);
     expect(board.playerShips).toEqual([{
         playerShip: ship1,
         coordinates: [[0, 0],[1, 0],[2, 0]]
     },
-    {playerShip: ship2, coordinates: [[4, 1],[4, 2]]}
+    {playerShip: ship2, coordinates: [[0, 1],[1, 1]]}
     ])
 });
 test('Test that overlapping ship placements are rejected.', () => {
     const board = new Gameboard();
     const ship1 = new Ship(3);
-    board.placeShips([0, 0], 'x', ship1);
+    board.placeShips([0, 2], 'x', ship1);
     const ship2 = new Ship(2);
-    const result = board.placeShips([1, 0], 'x', ship2);
+    const result = board.placeShips([0, 1], 'y', ship2);
     expect(result).toBe(false); 
     expect(board.playerShips).toEqual([{
         playerShip: ship1,
-        coordinates: [[0, 0],[1, 0],[2, 0]]
+        coordinates: [[0, 2],[1, 2],[2, 2]]
     }])
 });
 
@@ -70,13 +70,27 @@ test(`Test that attacking the same coordinate twice doesn't do anything or is pr
     expect(ship1.damage).toEqual(1)
 })
 
-// ✅ 4. Ship Sinking and Game End
-// Test that the board correctly identifies when a single ship is sunk.
-
-// Test that the board correctly identifies when all ships are sunk.
-
-// Test that the board reports ships are not all sunk if at least one is still afloat.
-
+// Ship Sinking and Game End
+test('Test that the board correctly identifies when all ships are sunk.', () => {
+    const board = new Gameboard();
+    const ship1 = new Ship(3);
+    board.placeShips([0, 0], 'x', ship1)
+    board.recieveAttack([0, 0])
+    board.recieveAttack([1, 0])
+    board.recieveAttack([2, 0])
+    expect(board.checkShipsStatus).toBeTruthy()
+})
+test('Test that the board reports ships are not all sunk if at least one is still afloat.', () => {
+    const board = new Gameboard();
+    const ship1 = new Ship(3);
+    board.placeShips([0, 0], 'x', ship1)
+    board.recieveAttack([0, 0])
+    board.recieveAttack([1, 0])
+    board.recieveAttack([2, 0])
+    const ship2 = new Ship(3);
+    board.placeShips([0, 1], 'x', ship1)
+    expect(board.checkShipsStatus).toBeTruthy()
+})
 // ✅ 5. Edge Cases (Optional but Recommended)
 // Test that placing a ship outside the bounds is handled appropriately (if bounds are implemented).
 

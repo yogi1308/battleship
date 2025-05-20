@@ -1,7 +1,9 @@
 export class Gameboard {
     constructor() {
         this.playerShips = []
-        this.attackedCoordinates = []
+        this.missedShots = []
+        this.madeShots = []
+        this.attackedCoordinates = [] // all shots
     }
     placeShips(start, dir, ship) {
         let newCoords = []
@@ -38,10 +40,20 @@ export class Gameboard {
         for (let ship of this.playerShips) {
             if (ship.coordinates.some(existing => existing[0] === attackedCoord[0] && existing[1] === attackedCoord[1])) {
                 ship.playerShip.hit()
+                this.madeShots.push(attackedCoord)
+                hit = true
                 break;
             }
             if (hit) break
         }
         this.attackedCoordinates.push(attackedCoord)
+        if (!hit) {this.missedShots.push(attackedCoord)}
+    }
+    checkShipsStatus() {
+        let allSunk = true
+        for (let ship of this.playerShips) {
+            if (!ship.isSunk()) {allSunk = false; break}
+        }
+        return allSunk
     }
 }
