@@ -91,9 +91,4 @@ test('Test that the board reports ships are not all sunk if at least one is stil
     board.placeShips([0, 1], 'x', ship1)
     expect(board.checkShipsStatus).toBeTruthy()
 })
-// ✅ 5. Edge Cases (Optional but Recommended)
-// Test that placing a ship outside the bounds is handled appropriately (if bounds are implemented).
 
-// Test that diagonal placements are rejected (if only horizontal/vertical allowed).
-
-// Test that receiveAttack() throws or handles if given invalid coordinates.
