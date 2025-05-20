@@ -1,8 +1,7 @@
-import { Ship } from './ship.js'
 export class Gameboard {
     constructor() {
-        this.playerOneShips = []
-        this.playerOneMissedShots = []
+        this.playerShips = []
+        this.attackedCoordinates = []
     }
     placeShips(start, dir, ship) {
         let newCoords = []
@@ -15,20 +14,34 @@ export class Gameboard {
                 newCoords.push([start[0], start[1] + i])
             }
         }
-        newCoords.forEach(coord => {
-            if (this.playerOneShips.some(existing => existing[0] === coord[0] && existing[1] === coord[1])) {
-                canBePlaced = false;
+        for (let coord of newCoords) {
+            for (let ship of this.playerShips) {
+                if (ship.coordinates.some(existing => existing[0] === coord[0] && existing[1] === coord[1])) {
+                    canBePlaced = false;
+                    break;
+                }
             }
-        });
+            if (!canBePlaced) break;
+        }
         if (canBePlaced) {
+            let shipAndCoords = {playerShip: ship, coordinates: []}
             newCoords.forEach(coord => {
-                this.playerOneShips.push(coord)
+                shipAndCoords.coordinates.push(coord)
             });
+            this.playerShips.push(shipAndCoords)
         }
         return canBePlaced
     }
-
-    recieveAttack() {
-
+    recieveAttack(attackedCoord) {
+        if (this.attackedCoordinates.some((existing => existing[0] === attackedCoord[0] && existing[1] === attackedCoord[1]))) {return}
+        let hit = false
+        for (let ship of this.playerShips) {
+            if (ship.coordinates.some(existing => existing[0] === attackedCoord[0] && existing[1] === attackedCoord[1])) {
+                ship.playerShip.hit()
+                break;
+            }
+            if (hit) break
+        }
+        this.attackedCoordinates.push(attackedCoord)
     }
 }
