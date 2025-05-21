@@ -53,8 +53,6 @@ h1, h2, h3, h4, h5, h6 {
   isolation: isolate;
 }
 
-
-
 body {
     background-color: rgb(4, 29, 33);
 }
@@ -125,7 +123,6 @@ body {
     }
 }
 
-
 /* Hide scrollbar arrows/buttons in WebKit browsers (Chrome, Edge, Opera, Safari) */
 ::-webkit-scrollbar-button {
   display: none;
@@ -161,7 +158,19 @@ body, html {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Optional: Hide scrollbar arrows in Firefox (not always supported) */
-scrollbarbutton {
+/* Hide scrollbar arrows/buttons in WebKit browsers (Chrome, Edge, Opera, Safari, iOS Safari) */
+::-webkit-scrollbar-button,
+::-webkit-scrollbar-button:single-button,
+::-webkit-scrollbar-button:decrement,
+::-webkit-scrollbar-button:increment {
   display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Hide scrollbar arrows in old Firefox (not supported in modern Firefox, but harmless) */
+scrollbarbutton {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
