@@ -1,8 +1,167 @@
-h1 {
-    color: red;
-    background-color: yellow;
+/* 1. Use a more-intuitive box-sizing model */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+* {
+  margin: 0;
+}
+
+/* 3. Enable keyword animations */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
 }
 
 body {
-    background-color: lightblue;
+  /* 4. Add accessible line-height */
+  line-height: 1.5;
+  /* 5. Improve text rendering */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 6. Improve media defaults */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 7. Inherit fonts for form controls */
+input, button, textarea, select {
+  font: inherit;
+}
+
+/* 8. Avoid text overflows */
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+/* 9. Improve line wrapping */
+p {
+  text-wrap: pretty;
+}
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
+/*
+  10. Create a root stacking context
+*/
+#root, #__next {
+  isolation: isolate;
+}
+
+
+
+body {
+    background-color: rgb(4, 29, 33);
+}
+
+.gameboards {
+    display: flex;
+    justify-content: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(10, minmax(calc(42.5vw/10), 1fr));
+    grid-template-rows: repeat(10, minmax(calc(42.5vw/10), 1fr));
+    border: 2px solid rgb(80, 207, 208);
+    min-width: 250px;
+    margin: 1rem;
+}
+
+.grid > div {
+    border: 1px solid rgb(80, 207, 208);
+    aspect-ratio: 1 / 1;
+}
+
+.board {
+    display: flex;
+    justify-content: space-around;
+    margin-left: 12vw;
+    margin-right: 12vw;
+    gap: 4rem;
+    color: rgb(80, 207, 208);
+    margin: 0px;
+}
+
+.turn {margin-bottom: 0px;}
+
+.board {margin-top: 0px;}
+
+.title, .turn {
+    color: rgb(80, 207, 208);
+    text-align: center;
+}
+
+.subtitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.line {
+  width: 50px;
+  height: 1px;
+  background: rgb(80, 207, 208) ;
+}
+
+.board-with-title {
+    width: max-content;
+}
+
+@media (max-width: 600px) {
+    .gameboards {
+        flex-direction: column;
+        align-items: center;
+    }
+    .grid {
+        grid-template-columns: repeat(10, minmax(calc(80vw/10), 1fr));
+        grid-template-rows: repeat(10, minmax(calc(80vw/10), 1fr));
+    }
+}
+
+
+/* Hide scrollbar arrows/buttons in WebKit browsers (Chrome, Edge, Opera, Safari) */
+::-webkit-scrollbar-button {
+  display: none;
+  height: 0;
+  width: 0;
+}
+
+/* WebKit browsers (Chrome, Edge, Opera, Safari, iOS Safari) */
+::-webkit-scrollbar {
+  width: 10px;
+  background: #04211f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(80, 207, 208, 0.5); /* lighter color, 50% opacity */
+  border-radius: 6px;
+  border: 1px solid #04211f;
+  transition: background 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(80, 207, 208, 1); /* normal color, fully opaque */
+}
+
+/* Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(80,207,208,0.5) #04211f;
+}
+
+/* For iOS Safari (enables momentum scrolling) */
+body, html {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Optional: Hide scrollbar arrows in Firefox (not always supported) */
+scrollbarbutton {
+  display: none;
 }
