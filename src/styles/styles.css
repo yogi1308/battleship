@@ -123,6 +123,44 @@ body {
     }
 }
 
+.choose-player {
+    display:flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 0.5rem;
+    width: fit-content;
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+}
+
+.choose-player > .title {
+    padding: 1rem;
+    gap: 0.5rem;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.choose-player-button {
+    border: 2px solid rgb(80, 207, 208);
+    display:flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+.choose-player-button > button {
+    color: rgb(80, 207, 208);
+    background: rgb(4, 29, 33);
+}
+
+.choose-player > .title > img {
+    width: 3rem;
+}
+
 /* Hide scrollbar arrows/buttons in WebKit browsers (Chrome, Edge, Opera, Safari) */
 ::-webkit-scrollbar-button {
   display: none;
