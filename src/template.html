@@ -304,7 +304,7 @@
         </div>
         <div class="choose-player">
             <div class="title">
-                <img src="./assets/battleship-icon-filled.png" alt="">
+                <img src="./assets/battleship-icon-filled.png" alt="" class="battleship-icon">
                 <h1>BATTLESHIP</h1>
                 <div class="subtitle">
                     <span class="line"></span>
@@ -314,16 +314,40 @@
             </div>
             <div class="choose-player-button">
                 <button class="play-friend">PLAY WITH A FRIEND</button>
-                <button class="play-computer ">PLAY AGAINST COMPUTER</button>
+                <button class="play-computer">PLAY AGAINST COMPUTER</button>
             </div>
         </div>
+        <div class="two-player-name">
+            <div class="title">
+                <img src="./assets/battleship-icon-filled.png" alt="" class="battleship-icon">
+                <h1>BATTLESHIP</h1>
+                <div class="subtitle">
+                    <span class="line"></span>
+                    <span>ONLINE</span>
+                    <span class="line"></span>
+                </div>
+            </div>
+            <form action="">
+                <input type="text" placeholder="Enter Player 1 Name">
+                <input type="text" placeholder="Enter Player 2 Name">
+            </form>
+            <button>✓</button>
+        </div>
+        <div class="single-player-name">
+            <div class="title">
+                <img src="./assets/battleship-icon-filled.png" alt="" class="battleship-icon">
+                <h1>BATTLESHIP</h1>
+                <div class="subtitle">
+                    <span class="line"></span>
+                    <span>ONLINE</span>
+                    <span class="line"></span>
+                </div>
+            </div>
+            <form action="">
+                <input type="text" placeholder="Enter Your Name">
+            </form>
+            <button>✓</button>
+        </div>
     </div>
-    <script>
-        window.addEventListener('load', () => {
-            document.querySelector('.loading-screen').style.display = 'none';
-            document.querySelector('.main-screen').style.display = 'block';
-            document.querySelector('.main-content').style.display = 'none';
-        });
-    </script>
 </body>
 </html>

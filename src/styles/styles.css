@@ -53,6 +53,10 @@ h1, h2, h3, h4, h5, h6 {
   isolation: isolate;
 }
 
+.single-player-name, .two-player-name, .main-content, .loading-screen {display: none}
+
+.main-screen {display: block}
+
 body {
     background-color: rgb(4, 29, 33);
 }
@@ -136,7 +140,7 @@ body {
     align-items: center;
 }
 
-.choose-player > .title {
+.title {
     padding: 1rem;
     gap: 0.5rem;
     width: fit-content;
@@ -157,8 +161,35 @@ body {
     background: rgb(4, 29, 33);
 }
 
-.choose-player > .title > img {
+.battleship-icon  {
     width: 5rem;
+}
+
+.two-player-name, .single-player-name {
+    flex-direction: column;
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border: 2px solid rgb(80, 207, 208);
+    margin-bottom: 0.5rem;
+}
+
+form > * {
+    color: grey;
+    background: rgb(4, 29, 33);   
+    margin: 1px;
+}
+
+button {
+    color: rgb(80, 207, 208);
+    background: rgb(4, 29, 33);
 }
 
 /* Hide scrollbar arrows/buttons in WebKit browsers (Chrome, Edge, Opera, Safari) */
