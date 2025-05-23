@@ -317,7 +317,7 @@
                 <button class="play-computer">PLAY AGAINST COMPUTER</button>
             </div>
         </div>
-        <div class="two-player-name">
+        <div class="two-player-name player-name">
             <div class="title">
                 <img src="./assets/battleship-icon-filled.png" alt="" class="battleship-icon">
                 <h1>BATTLESHIP</h1>
@@ -328,12 +328,12 @@
                 </div>
             </div>
             <form action="">
-                <input type="text" placeholder="Enter Player 1 Name">
-                <input type="text" placeholder="Enter Player 2 Name">
+                <input type="text" placeholder="Enter Player 1 Name" class="player-name-one-input" maxlength="30" required>
+                <input type="text" placeholder="Enter Player 2 Name" class="player-name-two-input" maxlength="30" required>
+                <button type="submit" class="save-name">✓</button>
             </form>
-            <button>✓</button>
         </div>
-        <div class="single-player-name">
+        <div class="single-player-name player-name">
             <div class="title">
                 <img src="./assets/battleship-icon-filled.png" alt="" class="battleship-icon">
                 <h1>BATTLESHIP</h1>
@@ -344,9 +344,118 @@
                 </div>
             </div>
             <form action="">
-                <input type="text" placeholder="Enter Your Name">
+                <input type="text" placeholder="Enter Your Name" class="player-name-input" maxlength="20" required>
+                <button type="submit" class="save-name">✓</button>
             </form>
-            <button>✓</button>
+        </div>
+        <div class="place-ships">
+            <div class="place-ship-name-container">
+                <h2>Place Your Ships</h2>
+                <h2 class="place-ship-player-name"></h2>
+            </div>
+            <div class="grid">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <button class="done">DONE</button>
         </div>
     </div>
 </body>

@@ -53,7 +53,7 @@ h1, h2, h3, h4, h5, h6 {
   isolation: isolate;
 }
 
-.single-player-name, .two-player-name, .main-content, .loading-screen {display: none}
+.single-player-name, .two-player-name, .main-content, .loading-screen, .place-ships {display: none}
 
 .main-screen {display: block}
 
@@ -191,6 +191,20 @@ button {
     color: rgb(80, 207, 208);
     background: rgb(4, 29, 33);
 }
+
+.place-ships {
+    flex-direction: column;
+    color: rgb(80, 207, 208);
+    align-items: center;
+    height: 100vh;
+    justify-content: center;
+}
+
+.place-ship-name-container {margin-bottom: 0.5rem;}
+
+body > div.main-screen > div.place-ships > .grid {margin: 0px; margin-bottom: 1rem;}
+
+.place-ship-player-name {justify-self: center;}
 
 /* Hide scrollbar arrows/buttons in WebKit browsers (Chrome, Edge, Opera, Safari) */
 ::-webkit-scrollbar-button {

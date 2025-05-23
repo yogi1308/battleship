@@ -1,3 +1,5 @@
+import {placeShips} from './placeShips.js'
+
 export function enterPlayerName() {
     const playFriend = document.querySelector('.play-friend')
     const playComputer = document.querySelector('.play-computer')
@@ -11,9 +13,19 @@ function displayPlayerNameForm(numPlayers) {
     if (numPlayers === 1) {
         const singlePlayerNameDiv = document.querySelector('.single-player-name')
         singlePlayerNameDiv.style.display = 'flex'
-        
+        singlePlayerNameDiv.querySelector('form').onsubmit = function(e) {
+            e.preventDefault();
+            placeShips(numPlayers);
+            singlePlayerNameDiv.style.display = 'none'
+        };
     }
     else if (numPlayers === 2) {
-        document.querySelector('.two-player-name').style.display = 'flex'
+        const twoPlayerNameDiv = document.querySelector('.two-player-name')
+        twoPlayerNameDiv.style.display = 'flex'
+        twoPlayerNameDiv.querySelector('form').onsubmit = function(e) {
+            e.preventDefault();
+            placeShips(numPlayers);
+            twoPlayerNameDiv.style.display = 'none'
+        };
     }
 }
