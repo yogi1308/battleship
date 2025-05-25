@@ -195,16 +195,123 @@ button {
 .place-ships {
     flex-direction: column;
     color: rgb(80, 207, 208);
-    align-items: center;
-    height: 100vh;
-    justify-content: center;
 }
+
+.place-ship-name-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.done {align-self: center;}
 
 .place-ship-name-container {margin-bottom: 0.5rem;}
 
 body > div.main-screen > div.place-ships > .grid {margin: 0px; margin-bottom: 1rem;}
 
+.axis {
+    display: flex;
+    gap: 1rem;
+}
+
+.axis > * {border: 1px solid rgb(80, 207, 208); padding: 0.5rem; border-radius: 0.5rem;}
+
 .place-ship-player-name {justify-self: center;}
+
+.grid-and-ship-pallete {
+    display: flex;
+    gap: 1rem;
+    height: 100%;
+    align-items: stretch;
+    justify-content: center;
+    flex: 1 1 0;
+    padding: 1rem;
+    border: 2px solid rgb(80, 207, 208);
+    width: fit-content;
+    align-self: center;
+    margin: 1rem 0px;
+    width: fit-content; /* Prevent content overflow */
+    box-sizing: border-box;
+}
+
+.ship-pallete {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    padding: 1rem;
+    width: auto;           /* Let width be determined by content */
+    min-width: 0;
+    max-width: 100%;
+    align-items: center;
+}
+
+.ship-pallete > div > img {
+    border-radius: 5px;
+    border: 1px solid rgb(80, 207, 208);
+    height: 0;
+    object-fit: contain;
+    flex: 1 1 0;
+    width: 100%;
+    aspect-ratio: 9/1
+}
+
+.grid-and-ship-pallete > .grid {
+  width: 90vw;
+  max-width: 500px;
+  aspect-ratio: 1 / 1;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  border: 2px solid rgb(80, 207, 208);
+}
+
+.ship-pallete > div {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    height: -webkit-fill-available;
+}
+
+.done {
+  width: 15rem;
+  margin-bottom: 1rem;
+}
+
+@media(max-width: 700px) {
+  .grid-and-ship-pallete {
+    flex-direction: column;
+    align-items: center;
+    gap: 0px;
+  }
+  .ship-pallete {
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 90vw;
+    max-width: 500px;
+    justify-content: center;
+  }
+  .ship-pallete > div {
+    height: 5rem;
+  }
+}
+
+@media(max-width: 580px) {
+  .grid-and-ship-pallete {
+    width: 100%;
+  }
+}
+
+@media(max-width: 450px) {
+  .grid-and-ship-pallete {
+    padding: 0.25rem;
+  }
+}
+
+@media(max-width: 300px) {
+  .grid-and-ship-pallete {
+    border: none;
+  }
+}
 
 /* Hide scrollbar arrows/buttons in WebKit browsers (Chrome, Edge, Opera, Safari) */
 ::-webkit-scrollbar-button {
