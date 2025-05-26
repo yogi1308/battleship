@@ -270,6 +270,7 @@ body > div.main-screen > div.place-ships > .grid {margin: 0px; margin-bottom: 1r
     flex-direction: column;
     align-self: stretch;
     height: -webkit-fill-available;
+    text-align: center;
 }
 
 .done {
@@ -293,6 +294,10 @@ body > div.main-screen > div.place-ships > .grid {margin: 0px; margin-bottom: 1r
   .ship-pallete > div {
     height: 5rem;
   }
+}
+
+div.ship-pallete > div, .axis > button {
+  cursor: pointer;
 }
 
 @media(max-width: 580px) {
