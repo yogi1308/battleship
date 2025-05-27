@@ -1,8 +1,9 @@
 export class Ship {
-    constructor(length) {
-        this.length = length
-        this.damage = 0
-        this.sunk = false
+    constructor(length, name = null) {
+        this.name = name;
+        this.length = length;
+        this.damage = 0;
+        this.sunk = false;
     }
     hit() {
         ++this.damage;

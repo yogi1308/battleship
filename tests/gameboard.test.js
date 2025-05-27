@@ -11,6 +11,18 @@ test('Test that a ship can be placed at a given coordinate.', () => {
         coordinates: [[0,0], [1,0], [2,0]]
     }])
 });
+test('Test that a ship cannot be placed outside the bounds', () => {
+    const ship = new Ship(3)
+    const board = new Gameboard();
+    const canBePlaced = board.placeShips([9, 0], 'x', ship); // horizontal placement of a ship of length 3
+    expect(canBePlaced).toBeFalsy()
+});
+test('Test that a ship cannot be placed outside the bounds', () => {
+    const ship = new Ship(3)
+    const board = new Gameboard();
+    const canBePlaced = board.placeShips([8, 0], 'x', ship); // horizontal placement of a ship of length 3
+    expect(canBePlaced).toBeFalsy()
+});
 test('Test that a ship can be placed at a given coordinate.', () => {
     const ship = new Ship(3)
     const board = new Gameboard();

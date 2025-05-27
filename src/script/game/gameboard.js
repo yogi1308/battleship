@@ -25,6 +25,9 @@ export class Gameboard {
             }
             if (!canBePlaced) break;
         }
+        for (let coord of newCoords) {
+            if (coord[0] >= 10 || coord[1] >= 10) {canBePlaced = false; break}
+        }
         if (canBePlaced) {
             let shipAndCoords = {playerShip: ship, coordinates: []}
             newCoords.forEach(coord => {

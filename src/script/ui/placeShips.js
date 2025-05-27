@@ -1,12 +1,13 @@
 import {displayShips} from '../GameUiInteraction/shipPlacementManager.js'
 
-export {placeShips, selectedAxis, selectedShip, selectedShipLength}
+export {placeShips, selectedAxis, selectedShip, selectedShipLength, setShipAndLength, setShipAndLengthImg}
 
 displayShips()
 
 let selectedAxis = 'x';
 let selectedShip = null;
 let selectedShipLength = null;
+let selectedShipEvent = null
 
 function placeShips(numPlayers) {
     if (numPlayers === 1) {
@@ -85,4 +86,18 @@ function determineShipAndLength(event) {
             selectedShipLength = 2
             break;
     }
+    selectedShipEvent = event.currentTarget
+}
+
+function setShipAndLength(ship = null, length = null) {
+    selectedShip = ship;
+    selectedShipLength = null
+}
+
+function setShipAndLengthImg() {
+    if (!selectedShipEvent) return;
+    selectedShipEvent.style.opacity = '0.5';
+    selectedShipEvent.style.cursor = 'pointer';
+    selectedShipEvent.querySelector('img').style.filter = ''
+    selectedShipEvent.removeEventListener('click', shipClicked);
 }

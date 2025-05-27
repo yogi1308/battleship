@@ -1,6 +1,6 @@
 import {Ship} from '../game/ship.js'
 import { numPlayers, player, player1, player2 } from '../ui/playerName.js'
-import {selectedAxis, selectedShip, selectedShipLength} from '../ui/placeShips.js'
+import {selectedAxis, selectedShip, selectedShipLength, setShipAndLength, setShipAndLengthImg} from '../ui/placeShips.js'
 
 export {displayShips}
 
@@ -41,17 +41,51 @@ function mouseEnter(e) {
     }
 
     cellsToHighlight.forEach(cell => {
-        cell.style.backgroundColor = isOutOfBounds ? 'rgba(255, 0, 0, 0.5)' : 'rgba(80, 207, 208, 0.5)';
+        if (!cell.classList.contains('placed')) {
+            cell.style.backgroundColor = isOutOfBounds ? 'rgba(255, 0, 0, 0.5)' : 'rgba(80, 207, 208, 0.5)';
+        }
     });
 }
 
-function mouseLeave(e) {
-    // Clear *all* hover previews
+function mouseLeave(e) { 
     document.querySelectorAll('.grid-and-ship-pallete > .grid > div').forEach(div => {
-        div.style.background = '';
-    });
+        if (!div.classList.contains('placed')) {div.style.background = ''}
+    })
 }
 
 function mouseClick(e) {
-    
+    const grid = document.querySelector('.grid-and-ship-pallete > .grid');
+    const cells = Array.from(grid.children);
+    const index = cells.indexOf(e.currentTarget);
+    const row = Math.floor(index / 10);
+    const col = index % 10;
+
+    const start = [col, row]; 
+    if (numPlayers === 1) {
+        const ship = new Ship(selectedShipLength, selectedShip); 
+        const canBePlaced = player.gameboard.placeShips(start, selectedAxis, ship); 
+
+        if (canBePlaced) {
+            let cellsToHighlight = [];
+            for (let i = 0; i < selectedShipLength; i++) {
+                let r = row;
+                let c = col;
+                if (selectedAxis === 'x') c += i;
+                else r += i;
+
+                const targetIndex = r * 10 + c;
+                cellsToHighlight.push(cells[targetIndex]);
+            }
+
+            cellsToHighlight.forEach(cell => {
+                cell.style.background = 'green';
+                cell.classList.add('placed');
+            });
+            setShipAndLength()
+            setShipAndLengthImg()
+            if (player.gameboard.playerShips.length === 5) {
+                // document.querySelector('.done').addEventListener('click', startGame)
+            }
+        }
+    }
 }
