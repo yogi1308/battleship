@@ -295,6 +295,11 @@ body > div.main-screen > div.place-ships > .grid {margin: 0px; margin-bottom: 1r
   align-items: center;
 }
 
+.grid > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 @media(max-width: 700px) {
   .grid-and-ship-pallete {

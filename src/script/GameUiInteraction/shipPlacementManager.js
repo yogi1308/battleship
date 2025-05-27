@@ -90,8 +90,39 @@ function mouseClick(e) {
             }
             const circle = document.createElement('div');
             circle.classList.add('reposition-circle');
-            cellsToHighlight[0].appendChild(circle);
-
+            circle.addEventListener('click', e => {
+                e.stopPropagation();   // ← prevent the grid‐cell click
+                deleteShip(e);
+            });
+            if (cellsToHighlight[0]) {
+                cellsToHighlight[0].appendChild(circle);
+            }
         }
     }
+}
+
+function deleteShip(e) {
+    const grid = document.querySelector('.grid-and-ship-pallete > .grid');
+    const cells = Array.from(grid.children);
+    const index = cells.indexOf(e.currentTarget.parentElement); // <div> containing circle
+    const row = Math.floor(index / 10);
+    const col = index % 10;
+
+    const arrIndex = player.gameboard.playerShips.findIndex(ship =>
+        ship.coordinates[0][0] == col && ship.coordinates[0][1] == row
+    );
+
+    const ship = player.gameboard.playerShips[arrIndex];
+    player.gameboard.playerShips = player.gameboard.playerShips.filter((_, i) => i !== arrIndex);
+
+    ship.coordinates.forEach(([r, c]) => {
+        const targetIndex = c * 10 + r;
+        const cell = cells[targetIndex];
+        cell.classList.remove('placed');
+        cell.style.background = '';
+        const marker = cell.querySelector('.reposition-circle');
+        if (marker) marker.remove();
+    });
+    console.log(ship.playerShip.name, ship.playerShip.length)
+    setShipAndLengthImg(ship.playerShip.name)
 }

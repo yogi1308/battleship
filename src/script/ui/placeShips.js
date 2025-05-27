@@ -42,6 +42,7 @@ function placeShips(numPlayers) {
 }
 
 function shipClicked(event) {
+    console.log('click')
     document.querySelectorAll('.ship-pallete img').forEach(img => {
         img.style.filter = ''; // reset others
     });
@@ -91,13 +92,28 @@ function determineShipAndLength(event) {
 
 function setShipAndLength(ship = null, length = null) {
     selectedShip = ship;
-    selectedShipLength = null
+    selectedShipLength = length
 }
 
-function setShipAndLengthImg() {
+function setShipAndLengthImg(name = null) {
     if (!selectedShipEvent) return;
-    selectedShipEvent.style.opacity = '0.5';
-    selectedShipEvent.style.cursor = 'default';
-    selectedShipEvent.querySelector('img').style.filter = ''
-    selectedShipEvent.removeEventListener('click', shipClicked);
+    if (name === null) {
+        selectedShipEvent.style.opacity = '0.5';
+        selectedShipEvent.style.cursor = 'default';
+        selectedShipEvent.querySelector('img').style.filter = ''
+        selectedShipEvent.removeEventListener('click', shipClicked);
+    }
+    else {
+        const shipPallete = document.querySelectorAll('.ship-pallete > div > p')
+        let restoredShip = null
+        shipPallete.forEach(ship => {
+            if (ship.textContent.split(" ", 1).toString() === name) {
+                restoredShip = ship.closest('div')
+                restoredShip.style.opacity = '';
+                restoredShip.style.cursor = 'pointer';
+                restoredShip.addEventListener('click', shipClicked);
+            }
+        })
+
+    }
 }
