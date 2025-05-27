@@ -97,7 +97,7 @@ function setShipAndLength(ship = null, length = null) {
 function setShipAndLengthImg() {
     if (!selectedShipEvent) return;
     selectedShipEvent.style.opacity = '0.5';
-    selectedShipEvent.style.cursor = 'pointer';
+    selectedShipEvent.style.cursor = 'default';
     selectedShipEvent.querySelector('img').style.filter = ''
     selectedShipEvent.removeEventListener('click', shipClicked);
 }

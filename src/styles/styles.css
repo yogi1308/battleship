@@ -278,6 +278,24 @@ body > div.main-screen > div.place-ships > .grid {margin: 0px; margin-bottom: 1r
   margin-bottom: 1rem;
 }
 
+.main-content {
+  flex-direction: column;
+  align-items: center;
+}
+
+.reposition-circle {
+  width: 14px;
+  height: 14px;
+  background-color: rgba(255, 0, 0, 0.692);
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  justify-self: center;
+  align-items: center;
+}
+
+
 @media(max-width: 700px) {
   .grid-and-ship-pallete {
     flex-direction: column;

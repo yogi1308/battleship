@@ -1,6 +1,7 @@
 import {Ship} from '../game/ship.js'
 import { numPlayers, player, player1, player2 } from '../ui/playerName.js'
 import {selectedAxis, selectedShip, selectedShipLength, setShipAndLength, setShipAndLengthImg} from '../ui/placeShips.js'
+import {startGame} from '../actualGame/startGame.js'
 
 export {displayShips}
 
@@ -84,8 +85,13 @@ function mouseClick(e) {
             setShipAndLength()
             setShipAndLengthImg()
             if (player.gameboard.playerShips.length === 5) {
-                // document.querySelector('.done').addEventListener('click', startGame)
+                document.querySelector('.done').style.cursor = 'pointer'
+                document.querySelector('.done').addEventListener('click', startGame)
             }
+            const circle = document.createElement('div');
+            circle.classList.add('reposition-circle');
+            cellsToHighlight[0].appendChild(circle);
+
         }
     }
 }
