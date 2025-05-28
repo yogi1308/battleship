@@ -1,7 +1,7 @@
 import {Ship} from '../game/ship.js'
 import { numPlayers, player, player1, player2 } from '../ui/playerName.js'
 import {selectedAxis, selectedShip, selectedShipLength, setShipAndLength, setShipAndLengthImg} from '../ui/placeShips.js'
-import {startGame} from '../actualGame/startGame.js'
+import {startSinglePlayerGame} from '../actualGame/startGame.js'
 
 export {displayShips}
 
@@ -86,7 +86,7 @@ function mouseClick(e) {
             setShipAndLengthImg()
             if (player.gameboard.playerShips.length === 5) {
                 document.querySelector('.done').style.cursor = 'pointer'
-                document.querySelector('.done').addEventListener('click', startGame)
+                document.querySelector('.done').addEventListener('click', () => startSinglePlayerGame())
             }
             const circle = document.createElement('div');
             circle.classList.add('reposition-circle');
