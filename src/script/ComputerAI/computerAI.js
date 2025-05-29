@@ -1,11 +1,15 @@
 import { Ship } from '../game/ship.js';
 import { Gameboard } from '../game/gameboard.js';
+import { computer } from '../actualGame/startGame.js';
+import {player} from '../ui/playerName.js'
 
 export class ComputerPlayer {
   constructor() {
     this.gameboard = new Gameboard();
     this.playerName = 'Computer';
     this.allShips = [];
+    this.previousAttack = 'miss'
+    this.previousAttackCoords = null
   }
 
   createComputerShips() {
@@ -61,5 +65,18 @@ export class ComputerPlayer {
         placed = this.gameboard.placeShips([x, y], dir, ship);
       }
     }
+  }
+
+  attackOpponent() {
+    let x, y;
+    while (true) {
+        x = Math.floor(Math.random() * 10);
+        y = Math.floor(Math.random() * 10);
+        // if we’ve already attacked [x,y], pick again
+        const already = player.gameboard.attackedCoordinates.some(([ax, ay]) => ax === x && ay === y);
+        if (already) continue;
+        break;
+    }
+    return [x, y]
   }
 }

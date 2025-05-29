@@ -51,12 +51,10 @@ export class Gameboard {
         }
         this.attackedCoordinates.push(attackedCoord)
         if (!hit) {this.missedShots.push(attackedCoord)}
+        if (hit) {this.madeShots.push(attackedCoord); return true} 
+        return false
     }
     checkShipsStatus() {
-        let allSunk = true
-        for (let ship of this.playerShips) {
-            if (!ship.isSunk()) {allSunk = false; break}
-        }
-        return allSunk
+      return this.playerShips.every(s => s.playerShip.isSunk());
     }
 }

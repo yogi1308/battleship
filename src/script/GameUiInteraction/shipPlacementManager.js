@@ -85,8 +85,11 @@ function mouseClick(e) {
             setShipAndLength()
             setShipAndLengthImg()
             if (player.gameboard.playerShips.length === 5) {
-                document.querySelector('.done').style.cursor = 'pointer'
-                document.querySelector('.done').addEventListener('click', () => startSinglePlayerGame())
+                const doneBtn = document.querySelector('.done');
+                doneBtn.style.cursor = 'pointer'
+                doneBtn.replaceWith(doneBtn.cloneNode(true));
+                const newDone = document.querySelector('.done');
+                newDone.addEventListener('click', () => startSinglePlayerGame());
             }
             const circle = document.createElement('div');
             circle.classList.add('reposition-circle');

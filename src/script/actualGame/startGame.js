@@ -1,13 +1,15 @@
 import { player, player1, player2 } from '../ui/playerName.js'
 import {ComputerPlayer} from '../ComputerAI/computerAI.js'
+import {controlGame} from './gameController.js'
 
-export {startSinglePlayerGame}
+export {startSinglePlayerGame, computer}
+
+let computer = null
 
 function startSinglePlayerGame() {
     let allCoords = []
     document.querySelector('.place-ships').style.display = 'none'
     document.querySelector('.main-content').style.display = 'flex'
-    document.querySelector('body > div.main-screen > div.main-content > h2.turn').textContent = player.playerName
     player.gameboard.playerShips.forEach(ship => {
         ship.coordinates.forEach(coord => {allCoords.push(coord)})
     });
@@ -19,19 +21,20 @@ function startSinglePlayerGame() {
         cell.style.backgroundColor = 'green'; 
     })
 
-    const computer = new ComputerPlayer()
+    computer = new ComputerPlayer()
     computer.createComputerShips()
     computer.placeComputerShips()
     let computerCoords = []
     computer.gameboard.playerShips.forEach(ship => {
         ship.coordinates.forEach(coord => {computerCoords.push(coord)})
     })
-    console.log(computerCoords)
-    const opponentGrid = document.querySelector('body > div.main-screen > div.main-content > div.gameboards > div.board-with-title.opponent-board > div');
+    const opponentGrid = document.querySelector('body > div.main-screen > div.main-content > div.gameboards > div.board-with-title.opponent-board > div.grid');
     const opponentGridCells = Array.from(opponentGrid.children);
     computerCoords.forEach(([row, col]) => {
         const idx  = col * 10 + row;
         const opponentGridCell = opponentGridCells[idx];
         opponentGridCell.style.backgroundColor = 'green';
     });
+    console.log(computer.gameboard.playerShips)
+    controlGame()
 }
