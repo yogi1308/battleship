@@ -1,6 +1,8 @@
 import {displayShips} from '../GameUiInteraction/shipPlacementManager.js'
+import { player1, player2 } from './playerName.js';
+import {runItAgainForPlayer2} from '../GameUiInteraction/shipPlacementManager.js'
 
-export {placeShips, selectedAxis, selectedShip, selectedShipLength, setShipAndLength, setShipAndLengthImg}
+export {placeShips, selectedAxis, selectedShip, selectedShipLength, setShipAndLength, setShipAndLengthImg, shipClicked, axisClicked, setAxis}
 
 displayShips()
 
@@ -8,6 +10,10 @@ let selectedAxis = 'x';
 let selectedShip = null;
 let selectedShipLength = null;
 let selectedShipEvent = null
+
+function setAxis() {
+    selectedAxis = 'x'
+}
 
 function placeShips(numPlayers) {
     if (numPlayers === 1) {
@@ -30,11 +36,8 @@ function placeShips(numPlayers) {
         placeShips.style.display = 'flex';
         document.querySelector('.axis > .x-axis').style.color = 'rgb(4, 29, 33)'
         document.querySelector('.axis > .x-axis').style.background = 'rgb(80, 207, 208)';
-        document.querySelector('.place-ship-player-name').textContent = document.querySelector('.player-name-one-input').value
-        placeShips.querySelector('.done').addEventListener('click', () => document.querySelector('.place-ship-player-name').textContent = document.querySelector('.player-name-two-input').value)
-                document.querySelectorAll('.ship-pallete > div').forEach(div => {
-            div.addEventListener('click', shipClicked);
-        });
+        document.querySelector('.place-ship-player-name').textContent = player1.playerName
+        placeShips.querySelector('.done').addEventListener('click', () => runItAgainForPlayer2())
         document.querySelectorAll('.axis > button').forEach(button => {
             button.addEventListener('click', axisClicked);
         });
@@ -42,7 +45,6 @@ function placeShips(numPlayers) {
 }
 
 function shipClicked(event) {
-    console.log('click')
     document.querySelectorAll('.ship-pallete img').forEach(img => {
         img.style.filter = ''; // reset others
     });

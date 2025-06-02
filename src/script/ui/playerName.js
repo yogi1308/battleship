@@ -17,7 +17,6 @@ function enterPlayerName() {
 
 function displayPlayerNameForm(numPlayers) {
     document.querySelector('.choose-player').style.display = 'none'
-    console.log('click')
     if (numPlayers === 1) {
         const singlePlayerNameDiv = document.querySelector('.single-player-name')
         singlePlayerNameDiv.style.display = 'flex'
@@ -32,8 +31,8 @@ function displayPlayerNameForm(numPlayers) {
         const twoPlayerNameDiv = document.querySelector('.two-player-name')
         twoPlayerNameDiv.style.display = 'flex'
         twoPlayerNameDiv.querySelector('form').onsubmit = function(e) {
-            player1 = new Player(document.querySelector('.two-player-name > form').children[1].value)
-            player2 = new Player(document.querySelector('.two-player-name > form').children[2].value)
+            player1 = new Player(document.querySelector('.two-player-name > form').children[0].value)
+            player2 = new Player(document.querySelector('.two-player-name > form').children[1].value)
             e.preventDefault();
             placeShips(numPlayers);
             twoPlayerNameDiv.style.display = 'none'
