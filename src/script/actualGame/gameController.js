@@ -25,7 +25,6 @@ function humanTurn() {
 }
 
 function announceWinner() {
-    console.log('game Winner')
     if (player.gameboard.checkShipsStatus()) {
         alert('Computer wins!');
     } else {

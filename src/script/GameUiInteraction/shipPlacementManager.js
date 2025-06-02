@@ -7,6 +7,8 @@ import { startTwoPlayerGame } from '../actualGame/twoPlayerGame.js'
 
 export {displayShips, runItAgainForPlayer2}
 
+let shipPlacedForPlayer1 = false;
+
 function displayShips() {
     document.querySelectorAll('.grid-and-ship-pallete > .grid > div').forEach(div => {
         div.addEventListener('mouseover', mouseEnter);
@@ -105,42 +107,84 @@ function mouseClick(e) {
         }
     }
     else {
-        const ship = new Ship(selectedShipLength, selectedShip); 
-        const canBePlaced = player1.gameboard.placeShips(start, selectedAxis, ship); 
+        if (!shipPlacedForPlayer1) {
+            const ship = new Ship(selectedShipLength, selectedShip); 
+            const canBePlaced = player1.gameboard.placeShips(start, selectedAxis, ship); 
 
-        if (canBePlaced) {
-            let cellsToHighlight = [];
-            for (let i = 0; i < selectedShipLength; i++) {
-                let r = row;
-                let c = col;
-                if (selectedAxis === 'x') c += i;
-                else r += i;
+            if (canBePlaced) {
+                let cellsToHighlight = [];
+                for (let i = 0; i < selectedShipLength; i++) {
+                    let r = row;
+                    let c = col;
+                    if (selectedAxis === 'x') c += i;
+                    else r += i;
 
-                const targetIndex = r * 10 + c;
-                cellsToHighlight.push(cells[targetIndex]);
+                    const targetIndex = r * 10 + c;
+                    cellsToHighlight.push(cells[targetIndex]);
+                }
+
+                cellsToHighlight.forEach(cell => {
+                    cell.style.background = 'green';
+                    cell.classList.add('placed');
+                });
+                setShipAndLength()
+                setShipAndLengthImg()
+                if (player1.gameboard.playerShips.length === 5) {
+                    const doneBtn = document.querySelector('.done');
+                    doneBtn.style.cursor = 'pointer'
+                    doneBtn.replaceWith(doneBtn.cloneNode(true));
+                    const newDone = document.querySelector('.done');
+                    newDone.addEventListener('click', () => runItAgainForPlayer2());
+                }
+                const circle = document.createElement('div');
+                circle.classList.add('reposition-circle');
+                circle.addEventListener('click', e => {
+                    e.stopPropagation();   // ← prevent the grid‐cell click
+                    deleteShip(e);
+                });
+                if (cellsToHighlight[0]) {
+                    cellsToHighlight[0].appendChild(circle);
+                }
             }
+        }
+        else {
+            const ship = new Ship(selectedShipLength, selectedShip); 
+            const canBePlaced = player2.gameboard.placeShips(start, selectedAxis, ship); 
 
-            cellsToHighlight.forEach(cell => {
-                cell.style.background = 'green';
-                cell.classList.add('placed');
-            });
-            setShipAndLength()
-            setShipAndLengthImg()
-            if (player1.gameboard.playerShips.length === 5) {
-                const doneBtn = document.querySelector('.done');
-                doneBtn.style.cursor = 'pointer'
-                doneBtn.replaceWith(doneBtn.cloneNode(true));
-                const newDone = document.querySelector('.done');
-                newDone.addEventListener('click', () => runItAgainForPlayer2());
-            }
-            const circle = document.createElement('div');
-            circle.classList.add('reposition-circle');
-            circle.addEventListener('click', e => {
-                e.stopPropagation();   // ← prevent the grid‐cell click
-                deleteShip(e);
-            });
-            if (cellsToHighlight[0]) {
-                cellsToHighlight[0].appendChild(circle);
+            if (canBePlaced) {
+                let cellsToHighlight = [];
+                for (let i = 0; i < selectedShipLength; i++) {
+                    let r = row;
+                    let c = col;
+                    if (selectedAxis === 'x') c += i;
+                    else r += i;
+
+                    const targetIndex = r * 10 + c;
+                    cellsToHighlight.push(cells[targetIndex]);
+                }
+
+                cellsToHighlight.forEach(cell => {
+                    cell.style.background = 'green';
+                    cell.classList.add('placed');
+                });
+                setShipAndLength()
+                setShipAndLengthImg()
+                if (player2.gameboard.playerShips.length === 5) {
+                    const doneBtn = document.querySelector('.done');
+                    doneBtn.style.cursor = 'pointer'
+                    doneBtn.replaceWith(doneBtn.cloneNode(true));
+                    const newDone = document.querySelector('.done');
+                    newDone.addEventListener('click', () => startTwoPlayerGame());
+                }
+                const circle = document.createElement('div');
+                circle.classList.add('reposition-circle');
+                circle.addEventListener('click', e => {
+                    e.stopPropagation();   // ← prevent the grid‐cell click
+                    deleteShip(e);
+                });
+                if (cellsToHighlight[0]) {
+                    cellsToHighlight[0].appendChild(circle);
+                }
             }
         }
     }
@@ -179,26 +223,49 @@ function deleteShip(e) {
         const row = Math.floor(index / 10);
         const col = index % 10;
 
-        const arrIndex = player1.gameboard.playerShips.findIndex(ship =>
-            ship.coordinates[0][0] == col && ship.coordinates[0][1] == row
-        );
+        if (!shipPlacedForPlayer1) {
+            const arrIndex = player1.gameboard.playerShips.findIndex(ship =>
+                ship.coordinates[0][0] == col && ship.coordinates[0][1] == row
+            );
 
-        const ship = player1.gameboard.playerShips[arrIndex];
-        player1.gameboard.playerShips = player1.gameboard.playerShips.filter((_, i) => i !== arrIndex);
+            const ship = player1.gameboard.playerShips[arrIndex];
+            player1.gameboard.playerShips = player1.gameboard.playerShips.filter((_, i) => i !== arrIndex);
 
-        ship.coordinates.forEach(([r, c]) => {
-            const targetIndex = c * 10 + r;
-            const cell = cells[targetIndex];
-            cell.classList.remove('placed');
-            cell.style.background = '';
-            const marker = cell.querySelector('.reposition-circle');
-            if (marker) marker.remove();
-        });
-        setShipAndLengthImg(ship.playerShip.name)   
+            ship.coordinates.forEach(([r, c]) => {
+                const targetIndex = c * 10 + r;
+                const cell = cells[targetIndex];
+                cell.classList.remove('placed');
+                cell.style.background = '';
+                const marker = cell.querySelector('.reposition-circle');
+                if (marker) marker.remove();
+            });
+            console.log(ship.playerShip.name, ship.playerShip.length)
+            setShipAndLengthImg(ship.playerShip.name) 
+        }
+        else {
+            const arrIndex = player2.gameboard.playerShips.findIndex(ship =>
+                ship.coordinates[0][0] == col && ship.coordinates[0][1] == row
+            );
+
+            const ship = player2.gameboard.playerShips[arrIndex];
+            player2.gameboard.playerShips = player2.gameboard.playerShips.filter((_, i) => i !== arrIndex);
+
+            ship.coordinates.forEach(([r, c]) => {
+                const targetIndex = c * 10 + r;
+                const cell = cells[targetIndex];
+                cell.classList.remove('placed');
+                cell.style.background = '';
+                const marker = cell.querySelector('.reposition-circle');
+                if (marker) marker.remove();
+            });
+            console.log(ship.playerShip.name, ship.playerShip.length)
+            setShipAndLengthImg(ship.playerShip.name)
+        }
     }
 }
 
 function runItAgainForPlayer2() {
+    shipPlacedForPlayer1 = true
     const grid = document.querySelector('.grid-and-ship-pallete > .grid');
     Array.from(grid.children).forEach(cell => {
         cell.style.background = '';
@@ -228,7 +295,4 @@ function runItAgainForPlayer2() {
 
     const doneBtn = document.querySelector('.done');
     doneBtn.replaceWith(doneBtn.cloneNode(true));       // remove old listener
-    const newDone = document.querySelector('.done');
-    newDone.style.cursor = 'pointer';
-    newDone.addEventListener('click', startTwoPlayerGame);
 }

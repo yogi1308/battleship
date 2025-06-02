@@ -35,6 +35,5 @@ function startSinglePlayerGame() {
         const opponentGridCell = opponentGridCells[idx];
         opponentGridCell.style.backgroundColor = 'green';
     });
-    console.log(computer.gameboard.playerShips)
     controlGame()
 }

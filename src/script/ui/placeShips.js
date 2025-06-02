@@ -37,7 +37,9 @@ function placeShips(numPlayers) {
         document.querySelector('.axis > .x-axis').style.color = 'rgb(4, 29, 33)'
         document.querySelector('.axis > .x-axis').style.background = 'rgb(80, 207, 208)';
         document.querySelector('.place-ship-player-name').textContent = player1.playerName
-        placeShips.querySelector('.done').addEventListener('click', () => runItAgainForPlayer2())
+        document.querySelectorAll('.ship-pallete > div').forEach(div => {
+            div.addEventListener('click', shipClicked);
+        });
         document.querySelectorAll('.axis > button').forEach(button => {
             button.addEventListener('click', axisClicked);
         });
