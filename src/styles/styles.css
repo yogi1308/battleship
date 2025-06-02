@@ -53,7 +53,7 @@ h1, h2, h3, h4, h5, h6 {
   isolation: isolate;
 }
 
-.single-player-name, .two-player-name, .main-content, .loading-screen, .place-ships {display: none}
+.single-player-name, .two-player-name, .main-content, .loading-screen, .place-ships, .switch {display: none}
 
 .main-screen {display: block}
 
@@ -315,7 +315,19 @@ div.gameboards > div.board-with-title.opponent-board > div.grid {
 
 .attacked, .gameboards > .board-with-title > .grid {cursor: default;}
 
-.grid {cursor: pointer}
+.grid, .switch > button {cursor: pointer}
+
+.switch {
+  flex-direction: column;
+  color: rgb(80, 207, 208);
+  gap: 0.5rem;
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  align-items: center;
+  width: max-content;
+}
 
 @media(max-width: 700px) {
   .grid-and-ship-pallete {

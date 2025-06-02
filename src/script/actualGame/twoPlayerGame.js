@@ -1,10 +1,10 @@
 import {player1, player2} from '../ui/playerName.js'
 
 let opponent = null
+let nextTurn = null
 
 export function startTwoPlayerGame() {
     document.querySelector('.place-ships').style.display = 'none'
-    document.querySelector('.main-content').style.display = 'flex'
     player1Turn()
 }
 
@@ -23,6 +23,8 @@ function announceWinner() {
 }
 
 function player1Turn() {
+    document.querySelector('.main-content').style.display = 'flex'
+    document.querySelector('.switch').style.display = 'none'
     if (determineGameOver()) {announceWinner(); return}
     console.log(player1.gameboard.missedShots, player1.gameboard.madeShots)
     console.log(player2.gameboard.missedShots, player2.gameboard.madeShots)
@@ -98,6 +100,8 @@ function player1Turn() {
 }
 
 function player2Turn() {
+    document.querySelector('.main-content').style.display = 'flex'
+    document.querySelector('.switch').style.display = 'none'
     if (determineGameOver()) {announceWinner(); return}
     console.log(player1.gameboard.missedShots, player1.gameboard.madeShots)
     console.log(player2.gameboard.missedShots, player2.gameboard.madeShots)
@@ -181,12 +185,46 @@ function opponentGridCellClicked(e) {
 
     const hit = opponent.gameboard.recieveAttack(coords);
 
-    if (opponent === player2) {
-        player2Turn()
-    }
-    else {player1Turn()}
+    switchScreen()
 }
 
 function onOpponentClick(e) {
     opponentGridCellClicked(e);
+}
+
+function switchScreen() {
+    const switchDiv = document.querySelector('.switch');
+    const mainContent = document.querySelector('.main-content');
+    const turnLabel = switchDiv.querySelector('.turn');
+    const button = switchDiv.querySelector('button');
+
+    // Hide the main boards, show overlay
+    mainContent.style.display = 'none';
+    switchDiv.style.display = 'flex';
+
+    // Decide whose turn is next
+    if (opponent === player2) {
+        turnLabel.textContent = `${player2.playerName}'s TURN`;
+        document.querySelector('body > div.main-screen > div.switch > p:nth-child(3)').textContent = `GIVE HIM THE DEVICE AND LOOK AWAY, ${player1.playerName}!!!`
+        button.textContent = `${player2.playerName}, CLICK WHEN YOU HAVE THE DEVICE`;
+        nextTurn = player2Turn;
+    } else {
+        turnLabel.textContent = `${player1.playerName}'s TURN`;
+        document.querySelector('body > div.main-screen > div.switch > p:nth-child(3)').textContent = `GIVE HIM THE DEVICE AND LOOK AWAY, ${player2.playerName}!!!`
+        button.textContent = `${player1.playerName}, CLICK WHEN YOU HAVE THE DEVICE`;
+        nextTurn = player1Turn;
+    }
+    button.replaceWith(button.cloneNode(true));
+    const newBtn = switchDiv.querySelector('button');
+
+    newBtn.addEventListener(
+        'click',
+        () => {
+        // Hide overlay, show boards, and run the saved turn function
+        switchDiv.style.display = 'none';
+        mainContent.style.display = 'flex';
+        if (typeof nextTurn === 'function') nextTurn();
+        },
+        { once: true }
+    );
 }
