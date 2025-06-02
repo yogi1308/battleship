@@ -313,7 +313,7 @@ div.gameboards > div.board-with-title.opponent-board > div.grid {
   cursor: pointer;
 }
 
-.attacked {cursor: default;}
+.attacked, .gameboards > .board-with-title > .grid {cursor: default;}
 
 .grid {cursor: pointer}
 
