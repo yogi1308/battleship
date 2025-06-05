@@ -521,3 +521,43 @@ scrollbarbutton {
   width: 0 !important;
   height: 0 !important;
 }
+
+/* even more intense red glow for hits */
+@keyframes glow-red {
+  0% {
+    text-shadow:
+      0 0 12px rgba(255, 0, 0, 1),
+      0 0 24px rgba(255, 0, 0, 0.9),
+      0 0 48px rgba(255, 0, 0, 0.7),
+      0 0 64px rgba(255, 0, 0, 0.5);
+  }
+  100% {
+    text-shadow: none;
+  }
+}
+
+/* even more intense green glow for misses */
+@keyframes glow-green {
+  0% {
+    text-shadow:
+      0 0 12px rgba(0, 255, 0, 1),
+      0 0 24px rgba(0, 255, 0, 0.9),
+      0 0 48px rgba(0, 255, 0, 0.7),
+      0 0 64px rgba(0, 255, 0, 0.5);
+  }
+  100% {
+    text-shadow: none;
+  }
+}
+
+.hit.glow {
+  animation: glow-red 1.0s ease-out forwards;
+}
+
+.miss.glow {
+  animation: glow-green 1.0s ease-out forwards;
+}
+
+.hit, .miss, .attacked {
+  font-size: larger;
+}
