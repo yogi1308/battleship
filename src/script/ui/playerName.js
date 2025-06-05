@@ -1,12 +1,16 @@
 import {placeShips} from './placeShips.js'
 import {Player} from '../game/player.js'
 
-export {enterPlayerName, player, player1, player2, numPlayers}
+export {enterPlayerName, player, player1, player2, numPlayers, setNumPlayers}
 
 let player = null;
 let player1 = null;
 let player2 = null;
 let numPlayers = 0;
+
+function setNumPlayers(num) {
+    numPlayers = num
+}
 
 function enterPlayerName() {
     const playFriend = document.querySelector('.play-friend')

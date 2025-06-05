@@ -1,5 +1,6 @@
 import {player} from '../ui/playerName.js'
 import {computer} from './startGame.js'
+import {rematch, mainMenu} from './gameOver.js'
 
 export {controlGame}
 
@@ -25,11 +26,16 @@ function humanTurn() {
 }
 
 function announceWinner() {
+    document.querySelector('.main-content').style.display = 'none'
+    const endScreenDiv = document.querySelector('.end-screen')
+    endScreenDiv.style.display = 'flex'
     if (player.gameboard.checkShipsStatus()) {
-        alert('Computer wins!');
+        endScreenDiv.querySelector('.winner').textContent = `Computer Wins!`
     } else {
-        alert(`${player.playerName} wins!`);
+        endScreenDiv.querySelector('.winner').textContent = `${player.playerName} Wins!`
     }
+    document.querySelector('.end-screen .end-screen-options button').addEventListener('click', () => {rematch()})
+    document.querySelector('.end-screen .end-screen-options button:nth-of-type(2)').addEventListener('click', () => {mainMenu()})
 }
 
 function opponentGridCellClicked(e) {

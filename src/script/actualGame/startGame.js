@@ -15,6 +15,13 @@ function startSinglePlayerGame() {
     });
     const grid = document.querySelector('.gameboards > .board-with-title > .grid')
     const cells = Array.from(grid.children);
+    cells.forEach(cell => {
+        cell.style.backgroundColor = ''; 
+        cell.textContent = ''
+        cell.classList.remove('hit')
+        cell.classList.remove('miss')
+        cell.classList.remove('attacked')
+    })
     allCoords.forEach(([row, col]) => {
         const index = col * 10 + row;
         const cell = cells[index];
@@ -30,6 +37,13 @@ function startSinglePlayerGame() {
     })
     const opponentGrid = document.querySelector('body > div.main-screen > div.main-content > div.gameboards > div.board-with-title.opponent-board > div.grid');
     const opponentGridCells = Array.from(opponentGrid.children);
+    opponentGridCells.forEach(cell => {
+        cell.style.backgroundColor = ''; 
+        cell.textContent = ''
+        cell.classList.remove('hit')
+        cell.classList.remove('miss')
+        cell.classList.remove('attacked')
+    })
     computerCoords.forEach(([row, col]) => {
         const idx  = col * 10 + row;
         const opponentGridCell = opponentGridCells[idx];

@@ -1,10 +1,12 @@
 import {player1, player2} from '../ui/playerName.js'
+import {rematch, mainMenu} from './gameOver.js'
 
 let opponent = null
 let nextTurn = null
 
 export function startTwoPlayerGame() {
     document.querySelector('.place-ships').style.display = 'none'
+    document.querySelector('.main-content').style.display = 'flex'
     player1Turn()
 }
 
@@ -15,19 +17,19 @@ function determineGameOver() {
 }
 
 function announceWinner() {
+    document.querySelector('.main-content').style.display = 'none'
+    const endScreenDiv = document.querySelector('.end-screen')
+    endScreenDiv.style.display = 'flex'
     if (player1.gameboard.checkShipsStatus()) {
-        alert(`${player2.playerName} Wins!`);
+        endScreenDiv.querySelector('.winner').textContent = `${player2.playerName} Wins!`
     } else {
-        alert(`${player1.playerName} Wins!`);
+        endScreenDiv.querySelector('.winner').textContent = `${player1.playerName} Wins!`
     }
+    document.querySelector('.end-screen .end-screen-options button').addEventListener('click', () => {rematch()})
+    document.querySelector('.end-screen .end-screen-options button:nth-of-type(2)').addEventListener('click', () => {mainMenu()})
 }
 
 function player1Turn() {
-    document.querySelector('.main-content').style.display = 'flex'
-    document.querySelector('.switch').style.display = 'none'
-    if (determineGameOver()) {announceWinner(); return}
-    console.log(player1.gameboard.missedShots, player1.gameboard.madeShots)
-    console.log(player2.gameboard.missedShots, player2.gameboard.madeShots)
     opponent = player2
     let allCoords = []
 
@@ -100,11 +102,6 @@ function player1Turn() {
 }
 
 function player2Turn() {
-    document.querySelector('.main-content').style.display = 'flex'
-    document.querySelector('.switch').style.display = 'none'
-    if (determineGameOver()) {announceWinner(); return}
-    console.log(player1.gameboard.missedShots, player1.gameboard.madeShots)
-    console.log(player2.gameboard.missedShots, player2.gameboard.madeShots)
     opponent = player1
     let allCoords = []
     player2.gameboard.playerShips.forEach(ship => {
@@ -193,6 +190,7 @@ function onOpponentClick(e) {
 }
 
 function switchScreen() {
+    if (determineGameOver()) {announceWinner(); return}
     const switchDiv = document.querySelector('.switch');
     const mainContent = document.querySelector('.main-content');
     const turnLabel = switchDiv.querySelector('.turn');

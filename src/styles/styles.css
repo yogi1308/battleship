@@ -53,7 +53,7 @@ h1, h2, h3, h4, h5, h6 {
   isolation: isolate;
 }
 
-.single-player-name, .two-player-name, .main-content, .loading-screen, .place-ships, .switch {display: none}
+.single-player-name, .two-player-name, .main-content, .loading-screen, .place-ships, .switch, .end-screen {display: none}
 
 .main-screen {display: block}
 
@@ -154,6 +154,7 @@ body {
     display:flex;
     flex-direction: column;
     padding: 1rem;
+    gap: 0.5rem;
 }
 
 .choose-player-button > button {
@@ -178,7 +179,7 @@ form {
     flex-direction: column;
     padding: 1rem;
     border: 2px solid rgb(80, 207, 208);
-    margin-bottom: 0.5rem;
+    gap: 0.25rem;
 }
 
 form > * {
@@ -328,6 +329,106 @@ div.gameboards > div.board-with-title.opponent-board > div.grid {
   align-items: center;
   width: max-content;
 }
+
+.end-screen {
+  flex-flow: column;
+  color: rgb(80, 207, 208);
+  align-items: center;
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: max-content;
+}
+
+.end-screen-options {
+  margin-top: 1.5rem;
+}
+
+body > div.main-screen > div.place-ships > div.place-ship-name-container > h2.place-ship-player-name {
+  margin-bottom: 1rem;
+}
+
+body {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+/* ======================================================
+   BUTTON BASE STYLES
+   ------------------------------------------------------
+   Applies to every <button> in the app
+   ====================================================== */
+button {
+  /* Teal background with dark text to match our palette */
+  background-color: rgb(4, 29, 33);
+  color: rgb(80, 207, 208);
+
+  /* Slightly rounded corners */
+  border-radius: 0.25rem;
+
+  /* Solid teal border, same color as background */
+  border: 2px solid rgb(80, 207, 208);
+
+  /* Comfortable padding, adjusts to font-size */
+  padding: 0.5rem 1rem;
+
+  /* Use the same font as the rest of the page */
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+
+  /* Make it clear it’s clickable */
+  cursor: pointer;
+
+  /* Animate color changes */
+  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* ======================================================
+   BUTTON HOVER / FOCUS
+   ------------------------------------------------------
+   Invert colors on hover/focus, add subtle shadow
+   ====================================================== */
+button:hover,
+button:focus {
+  /* Dark background, teal text */
+  background-color: rgb(4, 29, 33);
+  color: rgb(80, 207, 208);
+
+  /* Add a subtle glow around the button */
+  box-shadow: 0 0 8px rgba(80, 207, 208, 0.75);
+
+  /* Remove default outline and replace with a custom focus ring */
+  outline: none;
+  border-color: rgb(80, 207, 208);
+}
+
+/* ======================================================
+   DISABLED BUTTON STATE
+   ------------------------------------------------------
+   If you ever disable a button, give it a faded look.
+   ====================================================== */
+button:disabled {
+  background-color: rgba(80, 207, 208, 0.3);
+  border-color: rgba(80, 207, 208, 0.3);
+  color: rgba(4, 29, 33, 0.5);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ======================================================
+   OVERRIDES FOR SPECIFIC BUTTON GROUPS (OPTIONAL)
+   ------------------------------------------------------
+   If you need slight tweaks for “Play With a Friend” vs. 
+   “Done” vs. “Rematch,” you can target them here.
+   ====================================================== */
+/* Example: make the “Done” button a bit wider */
+button.done {
+  width: 12rem;
+  padding: 0.75rem;
+}
+
 
 @media(max-width: 700px) {
   .grid-and-ship-pallete {

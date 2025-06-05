@@ -5,9 +5,13 @@ import {startSinglePlayerGame} from '../actualGame/startGame.js'
 import {shipClicked, axisClicked} from '../ui/placeShips.js'
 import { startTwoPlayerGame } from '../actualGame/twoPlayerGame.js'
 
-export {displayShips, runItAgainForPlayer2}
+export {displayShips, runItAgainForPlayer2, setShipPlacedForPlayer1}
 
 let shipPlacedForPlayer1 = false;
+
+function setShipPlacedForPlayer1(value) {
+    shipPlacedForPlayer1 = value
+}
 
 function displayShips() {
     document.querySelectorAll('.grid-and-ship-pallete > .grid > div').forEach(div => {
@@ -239,7 +243,6 @@ function deleteShip(e) {
                 const marker = cell.querySelector('.reposition-circle');
                 if (marker) marker.remove();
             });
-            console.log(ship.playerShip.name, ship.playerShip.length)
             setShipAndLengthImg(ship.playerShip.name) 
         }
         else {

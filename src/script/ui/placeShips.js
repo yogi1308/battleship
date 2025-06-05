@@ -1,6 +1,5 @@
 import {displayShips} from '../GameUiInteraction/shipPlacementManager.js'
 import { player1, player2 } from './playerName.js';
-import {runItAgainForPlayer2} from '../GameUiInteraction/shipPlacementManager.js'
 
 export {placeShips, selectedAxis, selectedShip, selectedShipLength, setShipAndLength, setShipAndLengthImg, shipClicked, axisClicked, setAxis}
 
