@@ -63,6 +63,9 @@ function mouseLeave(e) {
 }
 
 function mouseClick(e) {
+    if (!selectedShip || selectedShipLength == null) {
+        return;
+    }
     const grid = document.querySelector('.grid-and-ship-pallete > .grid');
     const cells = Array.from(grid.children);
     const index = cells.indexOf(e.currentTarget);
@@ -218,7 +221,8 @@ function deleteShip(e) {
             if (marker) marker.remove();
         });
         console.log(ship.playerShip.name, ship.playerShip.length)
-        setShipAndLengthImg(ship.playerShip.name)   
+        setShipAndLengthImg(ship.playerShip.name) 
+        setShipAndLength(null, null);
     }
     else {
         const grid = document.querySelector('.grid-and-ship-pallete > .grid');
@@ -264,6 +268,7 @@ function deleteShip(e) {
             console.log(ship.playerShip.name, ship.playerShip.length)
             setShipAndLengthImg(ship.playerShip.name)
         }
+        setShipAndLength(null, null);
     }
 }
 
@@ -298,4 +303,5 @@ function runItAgainForPlayer2() {
 
     const doneBtn = document.querySelector('.done');
     doneBtn.replaceWith(doneBtn.cloneNode(true));       // remove old listener
+    setShipAndLength(null, null);
 }
