@@ -182,15 +182,16 @@ function opponentGridCellClicked(e) {
 
     const hit = opponent.gameboard.recieveAttack(coords);
 
-    switchScreen()
+    switchScreen(hit, coords)
 }
 
 function onOpponentClick(e) {
     opponentGridCellClicked(e);
 }
 
-function switchScreen() {
+async function switchScreen(hit, coords) {
     if (determineGameOver()) {announceWinner(); return}
+    const turnHeading = document.querySelector("body > div.main-screen > div.main-content > h2.turn");
     const switchDiv = document.querySelector('.switch');
     const mainContent = document.querySelector('.main-content');
     const turnLabel = switchDiv.querySelector('.turn');
@@ -217,12 +218,78 @@ function switchScreen() {
 
     newBtn.addEventListener(
         'click',
-        () => {
-        // Hide overlay, show boards, and run the saved turn function
+        async () => {
+        // Hide overlay, show boards again
         switchDiv.style.display = 'none';
         mainContent.style.display = 'flex';
-        if (typeof nextTurn === 'function') nextTurn();
+        const grid = document.querySelector('.gameboards > .board-with-title > .grid')
+        const cells = Array.from(grid.children);
+        const idx  = coords[1] * 10 + coords[0]
+        const cell = cells[idx]
+    
+        // Finally invoke the nextTurn function
+        if (typeof nextTurn === 'function') {
+            nextTurn();
+        }
+        const opponentGrid = document.querySelector('div.gameboards > div.board-with-title.opponent-board > div.grid');
+        const opponentCells = Array.from(opponentGrid.children);
+        opponentCells.forEach(cell => {
+            cell.removeEventListener('click', onOpponentClick)
+            cell.style.cursor = 'default'
+        })
+        // Type out “X attacked” depending on which turn function is next
+        if (nextTurn === player1Turn) {
+            cell.classList.add('glow');
+            await typeText(turnHeading, `${player2.playerName} attacked`, 75);
+            cell.classList.remove('glow');
+        } else {
+            cell.classList.add('glow');
+            await typeText(turnHeading, `${player1.playerName} attacked`, 75);
+            cell.classList.remove('glow');
+        }
+        await new Promise((r) => setTimeout(r, 400));
+        if (!hit) {cell.classList.add('glow'); await typeText(turnHeading, `It was a miss`, 75); cell.classList.remove('glow');}
+        else {cell.classList.add('glow'); await typeText(turnHeading, `It hit one of your ships`, 75); cell.classList.remove('glow');}
+        await new Promise((r) => setTimeout(r, 400)); 
+        {cell.classList.add('glow'); await typeText(turnHeading, `It's your turn now`, 75); cell.classList.remove('glow');}
+        await new Promise((r) => setTimeout(r, 400)); 
+        if (nextTurn === player1Turn) {
+            cell.classList.add('glow');
+            await typeText(turnHeading, `Place your attack carefully, ${player1.playerName}`, 75);
+            cell.classList.remove('glow');
+        } else {
+            cell.classList.add('glow');
+            await typeText(turnHeading, `Place your attack carefully, ${player2.playerName}`, 75);
+            cell.classList.remove('glow');
+        }
+
+        cell.classList.add('glow');
+        setTimeout(() => {
+            cell.classList.remove('glow');
+        }, 300);
+        opponentCells.forEach(cell => {
+            cell.addEventListener('click', onOpponentClick)
+            cell.style.cursor = 'pointer'
+        })
         },
         { once: true }
     );
+}
+
+function typeText(containerElement, fullText, letterDelay = 50) {
+  return new Promise((resolve) => {
+    containerElement.textContent = ""; // start empty
+    let i = 0;
+
+    function _typeNext() {
+      if (i < fullText.length) {
+        containerElement.textContent += fullText[i++];
+        setTimeout(_typeNext, letterDelay);
+      } else {
+        resolve();
+      }
+    }
+
+    _typeNext();
+  });
 }

@@ -522,42 +522,57 @@ scrollbarbutton {
   height: 0 !important;
 }
 
-/* even more intense red glow for hits */
+/* Red glow: starts tight, expands, then contracts */
 @keyframes glow-red {
   0% {
+    /* small, intense inner glow */
     text-shadow:
-      0 0 12px rgba(255, 0, 0, 1),
-      0 0 24px rgba(255, 0, 0, 0.9),
-      0 0 48px rgba(255, 0, 0, 0.7),
-      0 0 64px rgba(255, 0, 0, 0.5);
+      0 0 4px rgba(255, 0, 0, 1),
+      0 0 8px rgba(255, 0, 0, 0.8);
+  }
+  50% {
+    /* wider, fainter outer glow */
+    text-shadow:
+      0 0 32px rgba(255, 0, 0, 0.6),
+      0 0 64px rgba(255, 0, 0, 0.4),
+      0 0 96px rgba(255, 0, 0, 0.2);
   }
   100% {
-    text-shadow: none;
+    /* back to the small, intense inner glow */
+    text-shadow:
+      0 0 4px rgba(255, 0, 0, 1),
+      0 0 8px rgba(255, 0, 0, 0.8);
   }
 }
 
-/* even more intense green glow for misses */
+/* Green glow: same idea */
 @keyframes glow-green {
   0% {
     text-shadow:
-      0 0 12px rgba(0, 255, 0, 1),
-      0 0 24px rgba(0, 255, 0, 0.9),
-      0 0 48px rgba(0, 255, 0, 0.7),
-      0 0 64px rgba(0, 255, 0, 0.5);
+      0 0 4px rgba(0, 255, 0, 1),
+      0 0 8px rgba(0, 255, 0, 0.8);
+  }
+  50% {
+    text-shadow:
+      0 0 32px rgba(0, 255, 0, 0.6),
+      0 0 64px rgba(0, 255, 0, 0.4),
+      0 0 96px rgba(0, 255, 0, 0.2);
   }
   100% {
-    text-shadow: none;
+    text-shadow:
+      0 0 4px rgba(0, 255, 0, 1),
+      0 0 8px rgba(0, 255, 0, 0.8);
   }
 }
 
 .hit.glow {
-  animation: glow-red 1.0s ease-out forwards;
+  animation: glow-red 2.5s ease-in-out forwards;
 }
 
 .miss.glow {
-  animation: glow-green 1.0s ease-out forwards;
+  animation: glow-green 2.5s ease-in-out forwards;
 }
 
 .hit, .miss, .attacked {
-  font-size: larger;
+  font-size: 1.5rem;
 }

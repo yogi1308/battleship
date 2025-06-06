@@ -62,6 +62,13 @@ async function opponentGridCellClicked(e) {
     }
     cell.classList.add('glow');
 
+    const opponentGrid = document.querySelector('div.gameboards > div.board-with-title.opponent-board > div.grid');
+    const opponentCells = Array.from(opponentGrid.children);
+    opponentCells.forEach(cell => {
+        cell.removeEventListener('click', onOpponentClick)
+        cell.style.cursor = 'default'
+    })
+
     await typeText(turnHeading, hit ? "It's a Hit!!!" : "It's a Miss!!!", 75);
     await new Promise((r) => setTimeout(r, 300));
 
@@ -76,14 +83,6 @@ async function opponentGridCellClicked(e) {
 async function computerTurn() {
     if (determineGameOver()) {announceWinner(); return}
     const turnHeading = document.querySelector("body > div.main-screen > div.main-content > h2.turn");
-
-    const opponentGrid = document.querySelector('div.gameboards > div.board-with-title.opponent-board > div.grid');
-    const opponentCells = Array.from(opponentGrid.children);
-    opponentCells.forEach(cell => {
-        cell.removeEventListener('click', onOpponentClick)
-        cell.style.cursor = 'default'
-    })
-
 
     // 3. “Type out” the two lines in sequence:
     await typeText(turnHeading, "Computer is Attacking...", 75);
