@@ -47,7 +47,7 @@ function startSinglePlayerGame() {
     computerCoords.forEach(([row, col]) => {
         const idx  = col * 10 + row;
         const opponentGridCell = opponentGridCells[idx];
-        opponentGridCell.style.backgroundColor = 'green';
+        // opponentGridCell.style.backgroundColor = 'green';
     });
     controlGame()
 }

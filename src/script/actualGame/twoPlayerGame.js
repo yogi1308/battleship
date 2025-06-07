@@ -17,7 +17,72 @@ function determineGameOver() {
 }
 
 function announceWinner() {
-    document.querySelector('.main-content').style.display = 'none'
+    let allCoords = []
+
+    player1.gameboard.playerShips.forEach(ship => {
+        ship.coordinates.forEach(coord => {allCoords.push(coord)})
+    });
+    const grid = document.querySelector('.gameboards > .board-with-title > .grid')
+    const cells = Array.from(grid.children);
+    cells.forEach(cell => {
+        cell.style.background = '';
+        cell.textContent = ''
+        cell.classList.remove('hit');
+        cell.classList.remove('miss')
+    });
+    allCoords.forEach(([row, col]) => {
+        const index = col * 10 + row;
+        const cell = cells[index];
+        cell.style.backgroundColor = 'green'; 
+    })
+    player1.gameboard.missedShots.forEach(([x, y]) => {
+        const index = y * 10 + x;
+        const cell = cells[index];
+        cell.textContent = 'O';
+        cell.classList.add('miss');
+    });
+    player1.gameboard.madeShots.forEach(([x, y]) => {
+        const index = y * 10 + x;
+        const cell = cells[index];
+        cell.textContent = 'X';
+        cell.classList.add('hit');
+    });
+
+    document.querySelector('.turn').textContent = `${player1.playerName}'s Turn`
+
+    let otherPlayerCoords = []
+    player2.gameboard.playerShips.forEach(ship => {
+        ship.coordinates.forEach(coord => {otherPlayerCoords.push(coord)})
+    })
+    const opponentGrid = document.querySelector('body > div.main-screen > div.main-content > div.gameboards > div.board-with-title.opponent-board > div.grid');
+    const opponentGridCells = Array.from(opponentGrid.children);
+    opponentGridCells.forEach(cell => {
+        cell.style.background = '';
+        cell.textContent = ''
+        cell.classList.remove('attacked')
+        cell.classList.remove('hit');
+        cell.classList.remove('miss')
+    });
+    otherPlayerCoords.forEach(([row, col]) => {
+        const idx  = col * 10 + row;
+        const opponentGridCell = opponentGridCells[idx];
+        opponentGridCell.style.backgroundColor = 'green';
+    });
+    player2.gameboard.missedShots.forEach(([x, y]) => {
+        const index = y * 10 + x;
+        const cell = opponentGridCells[index];
+        cell.textContent = 'O';
+        cell.classList.add('miss');
+        cell.classList.add('attacked')
+    });
+    player2.gameboard.madeShots.forEach(([x, y]) => {
+        const index = y * 10 + x;
+        const cell = opponentGridCells[index];
+        cell.textContent = 'X';
+        cell.classList.add('hit');
+        cell.classList.add('attacked')
+    });
+    document.querySelector('.main-content').classList.add('blur-boards')
     const endScreenDiv = document.querySelector('.end-screen')
     endScreenDiv.style.display = 'flex'
     if (player1.gameboard.checkShipsStatus()) {
@@ -77,11 +142,11 @@ function player1Turn() {
         cell.classList.remove('hit');
         cell.classList.remove('miss')
     });
-    otherPlayerCoords.forEach(([row, col]) => {
-        const idx  = col * 10 + row;
-        const opponentGridCell = opponentGridCells[idx];
-        opponentGridCell.style.backgroundColor = 'green';
-    });
+    // otherPlayerCoords.forEach(([row, col]) => {
+    //     const idx  = col * 10 + row;
+    //     const opponentGridCell = opponentGridCells[idx];
+    //     opponentGridCell.style.backgroundColor = 'green';
+    // });
     player2.gameboard.missedShots.forEach(([x, y]) => {
         const index = y * 10 + x;
         const cell = opponentGridCells[index];
@@ -148,11 +213,11 @@ function player2Turn() {
         cell.classList.remove('hit');
         cell.classList.remove('miss')
     });
-    otherPlayerCoords.forEach(([row, col]) => {
-        const idx  = col * 10 + row;
-        const opponentGridCell = opponentGridCells[idx];
-        opponentGridCell.style.backgroundColor = 'green';
-    });
+    // otherPlayerCoords.forEach(([row, col]) => {
+    //     const idx  = col * 10 + row;
+    //     const opponentGridCell = opponentGridCells[idx];
+    //     opponentGridCell.style.backgroundColor = 'green';
+    // });
     player1.gameboard.missedShots.forEach(([x, y]) => {
         const index = y * 10 + x;
         const cell = opponentGridCells[index];
@@ -172,15 +237,32 @@ function player2Turn() {
     document.querySelectorAll('div.gameboards > div.board-with-title.opponent-board > div.grid > div.attacked').forEach(cell => {cell.removeEventListener('click', onOpponentClick)})
 }
 
-function opponentGridCellClicked(e) {
+async function opponentGridCellClicked(e) {
+    document.querySelectorAll('div.gameboards > div.board-with-title.opponent-board > div.grid > div').forEach(cell => {cell.removeEventListener('click', onOpponentClick)})
     const grid = document.querySelector('div.gameboards > div.board-with-title.opponent-board > div.grid');
     const cells = Array.from(grid.children);
     const index = cells.indexOf(e.currentTarget);
     const row = Math.floor(index / 10);
     const col = index % 10;
     const coords = [col, row]
+    const cell = e.currentTarget;
+    const turnHeading = document.querySelector("body > div.main-screen > div.main-content > h2.turn");
 
     const hit = opponent.gameboard.recieveAttack(coords);
+
+    if (hit) {
+        cell.textContent = 'X'
+        cell.classList.add('hit')
+    } else {
+        cell.textContent = 'O'
+        cell.classList.add('miss')
+    }
+    cell.classList.add('glow');
+
+    if (!hit) {await typeText(turnHeading, `It was a miss`, 50)}
+    else {await typeText(turnHeading, `It hit one of the ships`, 50)}
+    cell.classList.remove('glow')
+    await new Promise((r) => setTimeout(r, 1000));
 
     switchScreen(hit, coords)
 }
@@ -231,6 +313,7 @@ async function switchScreen(hit, coords) {
         if (typeof nextTurn === 'function') {
             nextTurn();
         }
+
         const opponentGrid = document.querySelector('div.gameboards > div.board-with-title.opponent-board > div.grid');
         const opponentCells = Array.from(opponentGrid.children);
         opponentCells.forEach(cell => {
@@ -240,26 +323,26 @@ async function switchScreen(hit, coords) {
         // Type out “X attacked” depending on which turn function is next
         if (nextTurn === player1Turn) {
             cell.classList.add('glow');
-            await typeText(turnHeading, `${player2.playerName} attacked`, 75);
+            await typeText(turnHeading, `${player2.playerName} attacked`, 50);
             cell.classList.remove('glow');
         } else {
             cell.classList.add('glow');
-            await typeText(turnHeading, `${player1.playerName} attacked`, 75);
+            await typeText(turnHeading, `${player1.playerName} attacked`, 50);
             cell.classList.remove('glow');
         }
-        await new Promise((r) => setTimeout(r, 400));
-        if (!hit) {cell.classList.add('glow'); await typeText(turnHeading, `It was a miss`, 75); cell.classList.remove('glow');}
-        else {cell.classList.add('glow'); await typeText(turnHeading, `It hit one of your ships`, 75); cell.classList.remove('glow');}
-        await new Promise((r) => setTimeout(r, 400)); 
-        {cell.classList.add('glow'); await typeText(turnHeading, `It's your turn now`, 75); cell.classList.remove('glow');}
-        await new Promise((r) => setTimeout(r, 400)); 
+        await new Promise((r) => setTimeout(r, 200));
+        if (!hit) {cell.classList.add('glow'); await typeText(turnHeading, `It was a miss`, 50); cell.classList.remove('glow');}
+        else {cell.classList.add('glow'); await typeText(turnHeading, `It hit one of your ships`, 50); cell.classList.remove('glow');}
+        await new Promise((r) => setTimeout(r, 200)); 
+        {cell.classList.add('glow'); await typeText(turnHeading, `It's your turn now`, 50); cell.classList.remove('glow');}
+        await new Promise((r) => setTimeout(r, 200)); 
         if (nextTurn === player1Turn) {
             cell.classList.add('glow');
-            await typeText(turnHeading, `Place your attack carefully, ${player1.playerName}`, 75);
+            await typeText(turnHeading, `Place your attack carefully, ${player1.playerName}`, 50);
             cell.classList.remove('glow');
         } else {
             cell.classList.add('glow');
-            await typeText(turnHeading, `Place your attack carefully, ${player2.playerName}`, 75);
+            await typeText(turnHeading, `Place your attack carefully, ${player2.playerName}`, 50);
             cell.classList.remove('glow');
         }
 
@@ -271,6 +354,7 @@ async function switchScreen(hit, coords) {
             cell.addEventListener('click', onOpponentClick)
             cell.style.cursor = 'pointer'
         })
+        document.querySelectorAll('div.gameboards > div.board-with-title.opponent-board > div.grid > div.attacked').forEach(cell => {cell.removeEventListener('click', onOpponentClick); cell.style.cursor = 'default'})
         },
         { once: true }
     );

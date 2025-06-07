@@ -335,10 +335,14 @@ div.gameboards > div.board-with-title.opponent-board > div.grid {
   color: rgb(80, 207, 208);
   align-items: center;
   position: absolute;
-  top: 35%;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: max-content;
+  border: 2px solid;
+  border-radius: 5px;
+  padding: 1rem;
+  backdrop-filter: blur(20px);
 }
 
 .end-screen-options {
@@ -597,4 +601,8 @@ scrollbarbutton {
 .miss.glow {
   animation: glow-green 2.5s ease-in-out forwards,
   pulse-green-cell  2.5s ease-in-out forwards;
+}
+
+.blur-boards {
+  filter: blur(3px) brightness(0.7);
 }

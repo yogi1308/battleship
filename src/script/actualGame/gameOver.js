@@ -7,6 +7,8 @@ import { computer } from '../actualGame/startGame.js';
 export {rematch, mainMenu}
 
 function rematch() {
+    document.querySelector('.main-content').classList.remove('blur-boards')
+    document.querySelector('.main-content').style.display = 'none'
     setShipPlacedForPlayer1(false)
     const grid = document.querySelector('.grid-and-ship-pallete > .grid');
     Array.from(grid.children).forEach(cell => {

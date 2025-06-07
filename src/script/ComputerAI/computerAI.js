@@ -80,8 +80,8 @@ export class ComputerPlayer {
     if (this.random) {
       // 1a) Pick a brand-new random [x,y] that we haven't attacked yet:
       while (true) {
-        x = Math.floor(Math.random() * 10);
-        y = Math.floor(Math.random() * 10);
+        x = pickWeighted();
+        y = pickWeighted();
         const already = player.gameboard.attackedCoordinates
           .some(([ax, ay]) => ax === x && ay === y);
         if (!already) break;
@@ -305,4 +305,15 @@ export class ComputerPlayer {
       return [x, y];
     }
   }
+}
+
+const weightedIndices = [
+  0,0, 1,1, 2,2,
+  3, 4, 5, 6,
+  7,7, 8,8, 9,9
+];
+
+function pickWeighted() {
+  const i = Math.floor(Math.random() * weightedIndices.length);
+  return weightedIndices[i];
 }

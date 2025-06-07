@@ -18,7 +18,7 @@ function determineGameOver() {
 async function humanTurn() {
     if (determineGameOver()) {announceWinner(); return}
     const turnHeading = document.querySelector("body > div.main-screen > div.main-content > h2.turn");
-    await typeText(turnHeading, "Your Turn", 75);
+    await typeText(turnHeading, "Your Turn", 50);
     const opponentGrid = document.querySelectorAll('div.gameboards > div.board-with-title.opponent-board > div.grid > div');
     opponentGrid.forEach(cell => {
         cell.addEventListener('click', onOpponentClick);
@@ -28,7 +28,16 @@ async function humanTurn() {
 }
 
 function announceWinner() {
-    document.querySelector('.main-content').style.display = 'none'
+    let computerCoords = []
+    computer.gameboard.playerShips.forEach(ship => {
+        ship.coordinates.forEach(coord => {computerCoords.push(coord)})
+    })
+    computerCoords.forEach(([row, col]) => {
+        const idx  = col * 10 + row;
+        const opponentGridCell = opponentGridCells[idx];
+        opponentGridCell.style.backgroundColor = 'green';
+    });
+    document.querySelector('.main-content').classList.add('blur-boards')
     const endScreenDiv = document.querySelector('.end-screen')
     endScreenDiv.style.display = 'flex'
     if (player.gameboard.checkShipsStatus()) {
@@ -69,8 +78,8 @@ async function opponentGridCellClicked(e) {
         cell.style.cursor = 'default'
     })
 
-    await typeText(turnHeading, hit ? "It's a Hit!!!" : "It's a Miss!!!", 75);
-    await new Promise((r) => setTimeout(r, 300));
+    await typeText(turnHeading, hit ? "It's a Hit!!!" : "It's a Miss!!!", 50);
+    await new Promise((r) => setTimeout(r, 200));
 
     // 4) Remove “glow” after 300ms so the animation can replay next time:
     setTimeout(() => {
@@ -85,10 +94,10 @@ async function computerTurn() {
     const turnHeading = document.querySelector("body > div.main-screen > div.main-content > h2.turn");
 
     // 3. “Type out” the two lines in sequence:
-    await typeText(turnHeading, "Computer is Attacking...", 75);
+    await typeText(turnHeading, "Computer is Attacking...", 50);
 
     // 4. After our typing is done, wait a moment so the user can read “…Attacking…”
-    await new Promise((r) => setTimeout(r, 400));
+    await new Promise((r) => setTimeout(r, 200));
 
     const [x, y] = computer.attackOpponent()
     const hit = player.gameboard.recieveAttack([x, y])
@@ -101,7 +110,7 @@ async function computerTurn() {
     cell.classList.add(hit ? 'hit' : 'miss')
     cell.classList.add('glow');
 
-    await typeText(turnHeading, hit ? "It's a Hit!!!" : "It's a Miss!!!", 75);
+    await typeText(turnHeading, hit ? "It's a Hit!!!" : "It's a Miss!!!", 50);
       // 4) Remove “glow” after 300ms so the animation can replay next time:
     setTimeout(() => {
         cell.classList.remove('glow');
@@ -110,7 +119,7 @@ async function computerTurn() {
     // 8. Finally, after a short delay, return control to `humanTurn()`:
     setTimeout(() => {
         humanTurn();
-    }, 1000);
+    }, 500);
 }
 
 function onOpponentClick(e) {
