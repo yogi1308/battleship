@@ -220,7 +220,6 @@ function deleteShip(e) {
             const marker = cell.querySelector('.reposition-circle');
             if (marker) marker.remove();
         });
-        console.log(ship.playerShip.name, ship.playerShip.length)
         setShipAndLengthImg(ship.playerShip.name) 
         setShipAndLength(null, null);
     }
@@ -265,7 +264,6 @@ function deleteShip(e) {
                 const marker = cell.querySelector('.reposition-circle');
                 if (marker) marker.remove();
             });
-            console.log(ship.playerShip.name, ship.playerShip.length)
             setShipAndLengthImg(ship.playerShip.name)
         }
         setShipAndLength(null, null);

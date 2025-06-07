@@ -39,18 +39,15 @@ function rematch() {
     doneBtn.replaceWith(doneBtn.cloneNode(true));
 
     if (numPlayers === 1) {
-        console.log('numplayer = 1')
         player.gameboard = new Gameboard();
 
         document.querySelector('.place-ship-player-name').textContent = player.playerName
-        console.log(player, computer)
         const endScreenDiv = document.querySelector('.end-screen')
         endScreenDiv.style.display = 'none'
         setNumPlayers(1)
         placeShips(1)
     }
     else {
-        console.log('numplayer = 2')
         player1.gameboard = new Gameboard();
         player2.gameboard = new Gameboard();
 

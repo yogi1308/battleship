@@ -29,6 +29,8 @@ async function humanTurn() {
 
 function announceWinner() {
     let computerCoords = []
+    const opponentGrid = document.querySelector('body > div.main-screen > div.main-content > div.gameboards > div.board-with-title.opponent-board > div.grid');
+    const opponentGridCells = Array.from(opponentGrid.children);
     computer.gameboard.playerShips.forEach(ship => {
         ship.coordinates.forEach(coord => {computerCoords.push(coord)})
     })

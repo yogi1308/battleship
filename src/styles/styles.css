@@ -1,3 +1,8 @@
+@font-face {
+    font-family: Black-Ops;
+    src: url(../assets/Black_Ops_One/BlackOpsOne-Regular.ttf);
+}
+
 /* 1. Use a more-intuitive box-sizing model */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -54,6 +59,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .single-player-name, .two-player-name, .main-content, .loading-screen, .place-ships, .switch, .end-screen {display: none}
+
+.player-name {align-items: center;}
 
 .main-screen {display: block}
 
@@ -456,7 +463,7 @@ div.ship-pallete > div, .axis > button {
   cursor: pointer;
 }
 
-@media(max-width: 580px) {
+@media(max-width: 720px) {
   .grid-and-ship-pallete {
     width: 100%;
   }
@@ -605,4 +612,14 @@ scrollbarbutton {
 
 .blur-boards {
   filter: blur(3px) brightness(0.7);
+}
+
+body {
+  font-family: Black-Ops, Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+}
+
+.attacked, .miss, .hit {
+  font-family: Arial;
+  font-weight: 900;
 }
